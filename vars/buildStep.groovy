@@ -14,27 +14,27 @@ def call(body) {
                 options: [artifactsPublisher(disabled: true),
                           junitPublisher(disabled: true, ignoreAttachments: false)]) {
             mvnCmd = "mvn -Dmaven.test.failure.ignore=true clean install"
-            if ($ { config.doCheckstyle }) {
+            if (${config.doCheckstyle}) {
                 mvnCmd += " checkstyle:checkstyle"
             }
-            if ($ { config.doSpotbugs }) {
+            if (${config.doSpotbugs}) {
                 mvnCmd += " findbugs:findbugs"
             }
-            if ($ { config.doPmd }) {
+            if (${config.doPmd}) {
                 mvnCmd += " pmd:pmd"
             }
             sh mvnCmd
             step([$class: 'Publisher'])
-            if ($ { config.doCheckstyle }) {
+            if (${config.doCheckstyle}) {
                 checkstyle canComputeNew: false, pattern: '**/checkstyle-result.xml'
             }
-            if ($ { config.doSpotbugs }) {
+            if (${config.doSpotbugs}) {
                 findbugs canComputeNew: false, pattern: '**/target/findbugsXml.xml'
             }
-            if ($ { config.doJacoco }) {
+            if (${config.doJacoco}) {
                 jacoco exclusionPattern: '**/jaxb/*.class'
             }
-            if ($ { config.doPmd }) {
+            if (${config.doPmd}) {
                 pmd canComputeNew: false, pattern: '**/pmd.xml'
             }
         }
