@@ -18,33 +18,41 @@ def call(body) {
         }
     }
     if (${config.doJacoco}) {
-        jacoco exclusionPattern: '**/jaxb/*.class'
+        node() {
+            jacoco exclusionPattern: '**/jaxb/*.class'
+        }
     }
     if (${config.doCheckstyle}) {
-        withMaven(jdk: 'Current JDK 8',
-                maven: 'Current Maven 3',
-                mavenLocalRepo: '${JENKINS_HOME}/maven-repositories/${EXECUTOR_NUMBER}/',
-                globalMavenSettingsConfig: '9a4daf6d-06dd-434a-83cc-9ba9bd2326fc') {
-            sh "mvn checkstyle:checkstyle"
-            checkstyle canComputeNew: false, pattern: '**/checkstyle-result.xml'
+        node() {
+            withMaven(jdk: 'Current JDK 8',
+                    maven: 'Current Maven 3',
+                    mavenLocalRepo: '${JENKINS_HOME}/maven-repositories/${EXECUTOR_NUMBER}/',
+                    globalMavenSettingsConfig: '9a4daf6d-06dd-434a-83cc-9ba9bd2326fc') {
+                sh "mvn checkstyle:checkstyle"
+                checkstyle canComputeNew: false, pattern: '**/checkstyle-result.xml'
+            }
         }
     }
     if (${config.doSpotbugs}) {
-        withMaven(jdk: 'Current JDK 8',
-                maven: 'Current Maven 3',
-                mavenLocalRepo: '${JENKINS_HOME}/maven-repositories/${EXECUTOR_NUMBER}/',
-                globalMavenSettingsConfig: '9a4daf6d-06dd-434a-83cc-9ba9bd2326fc') {
-            sh "mvn findbugs:findbugs"
-            findbugs canComputeNew: false, pattern: '**/target/findbugsXml.xml'
+        node() {
+            withMaven(jdk: 'Current JDK 8',
+                    maven: 'Current Maven 3',
+                    mavenLocalRepo: '${JENKINS_HOME}/maven-repositories/${EXECUTOR_NUMBER}/',
+                    globalMavenSettingsConfig: '9a4daf6d-06dd-434a-83cc-9ba9bd2326fc') {
+                sh "mvn findbugs:findbugs"
+                findbugs canComputeNew: false, pattern: '**/target/findbugsXml.xml'
+            }
         }
     }
     if (${config.doPmd}) {
-        withMaven(jdk: 'Current JDK 8',
-                maven: 'Current Maven 3',
-                mavenLocalRepo: '${JENKINS_HOME}/maven-repositories/${EXECUTOR_NUMBER}/',
-                globalMavenSettingsConfig: '9a4daf6d-06dd-434a-83cc-9ba9bd2326fc') {
-            sh "mvn pmd:pmd"
-            pmd canComputeNew: false, pattern: '**/pmd.xml'
+        node() {
+            withMaven(jdk: 'Current JDK 8',
+                    maven: 'Current Maven 3',
+                    mavenLocalRepo: '${JENKINS_HOME}/maven-repositories/${EXECUTOR_NUMBER}/',
+                    globalMavenSettingsConfig: '9a4daf6d-06dd-434a-83cc-9ba9bd2326fc') {
+                sh "mvn pmd:pmd"
+                pmd canComputeNew: false, pattern: '**/pmd.xml'
+            }
         }
     }
 }
