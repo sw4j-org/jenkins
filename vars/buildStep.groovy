@@ -9,6 +9,7 @@ def call() {
                       junitPublisher(disabled: true, ignoreAttachments: false)]) {
         sh "mvn -Dmaven.test.failure.ignore=true clean install"
         step([$class: 'Publisher'])
-        jacoco exclusionPattern: '**/jaxb/*.class'
+        jacoco exclusionPattern: '**/jaxb/*.class', execPattern: '**/jacoco.exec'
+        jacoco exclusionPattern: '**/jaxb/*.class', execPattern: '**/jacoco-it.exec'
     }
 }
