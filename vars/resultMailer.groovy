@@ -7,7 +7,7 @@ def call() {
                         to: 'ci@sw4j.org',
                         recipientProviders: [[$class: 'CulpritsRecipientProvider'],
                                              [$class: 'DevelopersRecipientProvider'],
-                                             [$class: 'FailingTestSuspectsRecipientProvider']],
+                                             [$class: 'FirstFailingBuildSuspectsRecipientProvider']],
                         replyTo: 'ci@sw4j.org',
                         subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - is successful again',
                         body: '$PROJECT_NAME - Build # $BUILD_NUMBER - is successful again',
@@ -18,7 +18,7 @@ def call() {
                     to: 'ci@sw4j.org',
                     recipientProviders: [[$class: 'CulpritsRecipientProvider'],
                                          [$class: 'DevelopersRecipientProvider'],
-                                         [$class: 'FailingTestSuspectsRecipientProvider']],
+                                         [$class: 'FirstFailingBuildSuspectsRecipientProvider']],
                     replyTo: 'ci@sw4j.org',
                     subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - failed!',
                     body: '$PROJECT_NAME - Build # $BUILD_NUMBER - failed with state \"$BUILD_STATUS\"!\n' +
