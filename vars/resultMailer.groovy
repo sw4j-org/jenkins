@@ -23,7 +23,7 @@ def call() {
                                          [$class: 'FirstFailingBuildSuspectsRecipientProvider']],
                     replyTo: 'ci@sw4j.org',
                     subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - failed!',
-                    body: '$PROJECT_NAME - Build # $BUILD_NUMBER - failed with state $BUILD_STATUS!\n' +
+                    body: '$PROJECT_NAME - Build # $BUILD_NUMBER - failed with state \"$BUILD_STATUS\"!\n' +
                             '\n' +
                             'Check console output at $BUILD_URL to view the results.',
                     mimeType: 'text/plain',
