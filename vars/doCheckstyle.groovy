@@ -9,7 +9,7 @@ def call() {
                 pattern: '**/checkstyle-result.xml',
                 failedTotalHigh: '0',
                 unstableTotalHigh: '0',
-                failedTotalNormal: '20',
-                unstableTotalNormal: '10'
+                failedTotalNormal: '4',
+                unstableTotalNormal: '2'
     }
 }
