@@ -8,8 +8,6 @@ def call() {
         checkstyle canComputeNew: false,
                 pattern: '**/checkstyle-result.xml',
                 failedTotalHigh: '0',
-                unstableTotalHigh: '0',
-                failedTotalNormal: '4',
-                unstableTotalNormal: '2'
+                unstableTotalNormal: '0'
     }
 }
