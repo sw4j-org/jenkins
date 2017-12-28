@@ -1,8 +1,11 @@
 
-def call(boolean doCheckstyle = true,
-         boolean doSpotbugs = true,
-         boolean doJacoco = true,
-         boolean doPmd = true) {
+def call(body) {
+    // evaluate the body block, and collect configuration into the object
+    def config = [:]
+    body.resolveStrategy = Closure.DELEGATE_FIRST
+    body.delegate = config
+    body()
+
     withMaven(jdk: 'Current JDK 8',
             maven: 'Current Maven 3',
             mavenLocalRepo: '${JENKINS_HOME}/maven-repositories/${EXECUTOR_NUMBER}/',
@@ -10,21 +13,21 @@ def call(boolean doCheckstyle = true,
             options: [artifactsPublisher(disabled: true),
                       junitPublisher(disabled: true, ignoreAttachments: false)]) {
         mvnCmd = "mvn -Dmaven.test.failure.ignore=true clean install"
-        if (doCheckstyle) { mvnCmd += " checkstyle:checkstyle" }
-        if (doSpotbugs) { mvnCmd += " findbugs:findbugs" }
-        if (doPmd) { mvnCmd += " pmd:pmd" }
+        if (${config.doCheckstyle}) { mvnCmd += " checkstyle:checkstyle" }
+        if (${config.doSpotbugs}) { mvnCmd += " findbugs:findbugs" }
+        if (${config.doPmd}) { mvnCmd += " pmd:pmd" }
         sh mvnCmd
         step([$class: 'Publisher'])
-        if (doCheckstyle) {
+        if (${config.doCheckstyle}) {
             checkstyle canComputeNew: false, pattern: '**/checkstyle-result.xml'
         }
-        if (doSpotbugs) {
+        if (${config.doSpotbugs}) {
             findbugs canComputeNew: false, pattern: '**/target/findbugsXml.xml'
         }
-        if (doJacoco) {
+        if (${config.doJacoco}) {
             jacoco exclusionPattern: '**/jaxb/*.class'
         }
-        if (doPmd) {
+        if (${config.doPmd}) {
             pmd canComputeNew: false, pattern: '**/pmd.xml'
         }
     }
