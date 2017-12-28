@@ -1,6 +1,5 @@
 
 def call() {
-
     withMaven(jdk: 'Current JDK 8',
             maven: 'Current Maven 3',
             mavenLocalRepo: '${JENKINS_HOME}/maven-repositories/${EXECUTOR_NUMBER}/',
@@ -9,7 +8,14 @@ def call() {
                       junitPublisher(disabled: true, ignoreAttachments: false)]) {
         sh "mvn -Dmaven.test.failure.ignore=true clean install"
         step([$class: 'Publisher'])
-        jacoco exclusionPattern: '**/jaxb/*.class', execPattern: '**/jacoco.exec'
-        jacoco exclusionPattern: '**/jaxb/*.class', execPattern: '**/jacoco-it.exec'
+        jacoco exclusionPattern: '**/jaxb/*.class',
+                execPattern: '**/jacoco.exec',
+                changeBuildStatus: true,
+                maximumInstructionCoverage: '90',
+                minimumInstructionCoverage: '75',
+                maximumBranchCoverage: '90',
+                minimumBranchCoverage: '75',
+                maximumComplexityCoverage: '85',
+                minimumComplexityCoverage: '70'
     }
 }
