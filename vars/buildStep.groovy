@@ -16,6 +16,8 @@ def call() {
                 maximumBranchCoverage: '90',
                 minimumBranchCoverage: '75',
                 maximumComplexityCoverage: '85',
-                minimumComplexityCoverage: '70'
+                minimumComplexityCoverage: '70',
+                maximumLineCoverage: '90',
+                minimumLineCoverage: '75'
     }
 }
