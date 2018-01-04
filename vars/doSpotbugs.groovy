@@ -6,6 +6,9 @@ def call() {
             mavenLocalRepo: '${JENKINS_HOME}/maven-repositories/${EXECUTOR_NUMBER}/',
             globalMavenSettingsConfig: '9a4daf6d-06dd-434a-83cc-9ba9bd2326fc') {
         sh "mvn spotbugs:spotbugs"
-        findbugs canComputeNew: false, pattern: '**/target/spotbugsXml.xml'
+        findbugs canComputeNew: false,
+                pattern: '**/target/spotbugsXml.xml',
+                failedTotalHigh: '0',
+                unstableTotalNormal: '0'
     }
 }
