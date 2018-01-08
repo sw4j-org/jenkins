@@ -10,7 +10,7 @@ def call() {
                                              [$class: 'FirstFailingBuildSuspectsRecipientProvider']],
                         replyTo: 'ci@sw4j.org',
                         subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - is successful again',
-                        body: '$PROJECT_NAME - Build # $BUILD_NUMBER - is successful again',
+                        body: 'Check console output at $BUILD_URL to view the results.',
                         mimeType: 'text/plain')
             }
         } else {
@@ -20,10 +20,8 @@ def call() {
                                          [$class: 'DevelopersRecipientProvider'],
                                          [$class: 'FirstFailingBuildSuspectsRecipientProvider']],
                     replyTo: 'ci@sw4j.org',
-                    subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - failed!',
-                    body: '$PROJECT_NAME - Build # $BUILD_NUMBER - failed with state \"$BUILD_STATUS\"!\n' +
-                            '\n' +
-                            'Check console output at $BUILD_URL to view the results.',
+                    subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - failed with state "$BUILD_STATUS"!',
+                    body: 'Check console output at $BUILD_URL to view the results.',
                     mimeType: 'text/plain',
                     attachLog: true,
                     compressLog: true)
