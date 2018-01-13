@@ -6,7 +6,7 @@ def call() {
             globalMavenSettingsConfig: '9a4daf6d-06dd-434a-83cc-9ba9bd2326fc',
             options: [artifactsPublisher(disabled: true),
                       junitPublisher(disabled: true, ignoreAttachments: false)]) {
-        sh "mvn -Dmaven.test.failure.ignore=true clean install"
+        sh "mvn -Dmaven.test.failure.ignore=true clean verify"
         step([$class: 'Publisher'])
         jacoco exclusionPattern: '**/jaxb/*.class',
                 execPattern: '**/jacoco.exec',
